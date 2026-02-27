@@ -1,0 +1,47 @@
+{
+  "name": "seal",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "seal": "dist/index.js"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "bun build src/index.ts --outdir dist --target bun --format esm --sourcemap --external @stricli/core --banner '#!/usr/bin/env bun\n' && tsgo -p tsconfig.json --emitDeclarationOnly",
+    "prepack": "bun run build",
+    "publish:dry": "npm publish --dry-run",
+    "publish:run": "npm publish",
+    "typecheck": "turbo run build --filter @jmmarotta/seal-sdk && tsgo -p tsconfig.test.json --noEmit",
+    "lint": "oxlint src",
+    "fmt": "oxfmt --write src",
+    "fmt:check": "oxfmt --check src",
+    "test": "turbo run build --filter @jmmarotta/seal-sdk && bun test"
+  },
+  "dependencies": {
+    "@stricli/core": "^1"
+  },
+  "devDependencies": {
+    "@jmmarotta/seal-sdk": "workspace:*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmmarotta/seal.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/jmmarotta/seal/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/jmmarotta/seal/tree/main/packages/cli#readme"
+}

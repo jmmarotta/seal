@@ -1,0 +1,13 @@
+pre-commit:
+  commands:
+    fmt-check:
+      run: bun fmt:check
+    lint:
+      run: bun lint
+
+pre-push:
+  commands:
+    typecheck:
+      run: bun typecheck
+    test:
+      run: bun test

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [
+    "tsconfig.base.json",
+    ".oxlintrc.json",
+    ".oxfmtrc.jsonc"
+  ],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "typecheck": {
+      "dependsOn": ["^typecheck"],
+      "outputs": []
+    },
+    "lint": {
+      "dependsOn": ["^lint"],
+      "outputs": []
+    },
+    "fmt": {
+      "outputs": []
+    },
+    "fmt:check": {
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": ["^test"],
+      "outputs": []
+    },
+    "publish:dry": {
+      "dependsOn": ["build"],
+      "cache": false,
+      "outputs": []
+    },
+    "publish:run": {
+      "dependsOn": ["build"],
+      "cache": false,
+      "outputs": []
+    }
+  }
+}

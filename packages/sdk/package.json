@@ -1,0 +1,29 @@
+{
+  "name": "@jmmarotta/seal-sdk",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "bun build src/index.ts --outdir dist --target bun --format esm --sourcemap && tsgo -p tsconfig.json --emitDeclarationOnly",
+    "prepack": "bun run build",
+    "publish:dry": "bun publish --dry-run --access public",
+    "publish:run": "bun publish --access public",
+    "typecheck": "tsgo -p tsconfig.test.json --noEmit",
+    "lint": "oxlint src",
+    "fmt": "oxfmt --write src",
+    "fmt:check": "oxfmt --check src",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "zod": "^4.3.6"
+  }
+}

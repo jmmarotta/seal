@@ -1,0 +1,31 @@
+{
+  "name": "seal-repo",
+  "private": true,
+  "packageManager": "bun@1.3.6",
+  "type": "module",
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "bun packages/cli/src/index.ts",
+    "start": "bun packages/cli/src/index.ts",
+    "publish:dry": "turbo run publish:dry --concurrency 1 --filter seal --filter '@jmmarotta/seal-sdk'",
+    "publish": "turbo run publish:run --concurrency 1 --filter seal --filter '@jmmarotta/seal-sdk'",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "fmt": "turbo run fmt",
+    "fmt:check": "turbo run fmt:check",
+    "test": "turbo run test",
+    "ci:seal-check": "turbo run build --filter @jmmarotta/seal-sdk && bun scripts/ci-seal-check.ts",
+    "postinstall": "if [ -d .git ]; then lefthook install; fi"
+  },
+  "devDependencies": {
+    "@jmmarotta/seal-sdk": "workspace:*",
+    "@tsconfig/bun": "latest",
+    "@typescript/native-preview": "latest",
+    "@types/bun": "latest",
+    "lefthook": "^1.7.8",
+    "oxfmt": "latest",
+    "oxlint": "latest",
+    "turbo": "latest"
+  }
+}
