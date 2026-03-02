@@ -23,7 +23,7 @@
     "@tsconfig/bun": "latest",
     "@typescript/native-preview": "latest",
     "@types/bun": "latest",
-    "lefthook": "^1.7.8",
+    "lefthook": "^2.1.2",
     "oxfmt": "latest",
     "oxlint": "latest",
     "turbo": "latest"
