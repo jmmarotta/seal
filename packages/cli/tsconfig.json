@@ -6,7 +6,11 @@
     "declaration": true,
     "declarationMap": true,
     "strict": true,
-    "noEmit": false
+    "noEmit": false,
+    "paths": {
+      "@jmmarotta/seal-sdk": ["../sdk/src/index.ts"],
+      "*": ["./*"]
+    }
   },
   "include": ["src"]
 }
