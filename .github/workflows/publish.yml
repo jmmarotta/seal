@@ -1,0 +1,172 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Package(s) to publish
+        required: true
+        type: choice
+        default: all
+        options:
+          - all
+          - cli
+          - sdk
+      dry_run:
+        description: Run npm publish in dry-run mode
+        required: true
+        type: boolean
+        default: false
+  push:
+    tags:
+      - "v*"
+      - "seal-v*"
+      - "seal-sdk-v*"
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3.9"
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Format check
+        run: bun run fmt:check
+
+      - name: Lint
+        run: bun run lint
+
+      - name: Typecheck
+        run: bun run typecheck
+
+      - name: Seal check JSON gate
+        run: bun run ci:seal-check
+
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3.9"
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Test
+        run: bun run test
+
+  publish:
+    runs-on: ubuntu-latest
+    needs:
+      - checks
+      - tests
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3.9"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Resolve publish target
+        id: target
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_TARGET: ${{ github.event.inputs.target || '' }}
+        run: |
+          target="all"
+
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            target="$INPUT_TARGET"
+          else
+            tag="${GITHUB_REF_NAME}"
+            if [[ "$tag" == seal-v* ]]; then
+              target="cli"
+            elif [[ "$tag" == seal-sdk-v* ]]; then
+              target="sdk"
+            elif [[ "$tag" == v* ]]; then
+              target="all"
+            else
+              echo "Unsupported release tag: $tag"
+              exit 1
+            fi
+          fi
+
+          echo "target=$target" >> "$GITHUB_OUTPUT"
+
+      - name: Resolve publish mode
+        id: mode
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        run: |
+          args="--provenance --access public"
+          if [[ "$EVENT_NAME" == "workflow_dispatch" && "$INPUT_DRY_RUN" == "true" ]]; then
+            args="$args --dry-run"
+          fi
+          echo "args=$args" >> "$GITHUB_OUTPUT"
+
+      - name: Check SDK version on npm
+        id: sdk
+        if: steps.target.outputs.target == 'all' || steps.target.outputs.target == 'sdk'
+        run: |
+          version="$(npm pkg get version --prefix packages/sdk | tr -d '"')"
+          if npm view "@jmmarotta/seal-sdk@$version" version >/dev/null 2>&1; then
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+            echo "@jmmarotta/seal-sdk@$version already exists; skipping publish"
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+            echo "@jmmarotta/seal-sdk@$version not found; publishing"
+          fi
+
+      - name: Check CLI version on npm
+        id: cli
+        if: steps.target.outputs.target == 'all' || steps.target.outputs.target == 'cli'
+        run: |
+          version="$(npm pkg get version --prefix packages/cli | tr -d '"')"
+          if npm view "@jmmarotta/seal@$version" version >/dev/null 2>&1; then
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+            echo "@jmmarotta/seal@$version already exists; skipping publish"
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+            echo "@jmmarotta/seal@$version not found; publishing"
+          fi
+
+      - name: Publish SDK
+        if: (steps.target.outputs.target == 'all' || steps.target.outputs.target == 'sdk') && steps.sdk.outputs.publish == 'true'
+        working-directory: packages/sdk
+        run: npm publish ${{ steps.mode.outputs.args }}
+
+      - name: Publish CLI
+        if: (steps.target.outputs.target == 'all' || steps.target.outputs.target == 'cli') && steps.cli.outputs.publish == 'true'
+        working-directory: packages/cli
+        run: npm publish ${{ steps.mode.outputs.args }}
