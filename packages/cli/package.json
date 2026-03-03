@@ -19,7 +19,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "bun build src/index.ts --outdir dist --target bun --format esm --sourcemap --external @stricli/core --banner '#!/usr/bin/env bun\n' && tsgo -p tsconfig.json --emitDeclarationOnly",
+    "build": "bun build src/index.ts --outdir dist --target bun --format esm --sourcemap --external @stricli/core --external @jmmarotta/seal-sdk --banner '#!/usr/bin/env bun\n' && tsgo -p tsconfig.json --emitDeclarationOnly",
     "prepack": "bun run build",
     "publish:dry": "npm publish --dry-run",
     "publish:run": "npm publish",
@@ -30,10 +30,8 @@
     "test": "turbo run build --filter @jmmarotta/seal-sdk && bun test"
   },
   "dependencies": {
+    "@jmmarotta/seal-sdk": "workspace:*",
     "@stricli/core": "^1"
-  },
-  "devDependencies": {
-    "@jmmarotta/seal-sdk": "workspace:*"
   },
   "repository": {
     "type": "git",
