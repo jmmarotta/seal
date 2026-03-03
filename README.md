@@ -97,3 +97,18 @@ bun run dev check
 - `bun run typecheck`
 - `bun run test`
 - `bun run ci:seal-check` (validates `seal check --json` in CI fixture flow)
+
+## Release tags
+
+Use git tags to select which package(s) publish:
+
+- `vX.Y.Z`: publish both `@jmmarotta/seal` and `@jmmarotta/seal-sdk`
+- `seal-vX.Y.Z`: publish only `@jmmarotta/seal`
+- `seal-sdk-vX.Y.Z`: publish only `@jmmarotta/seal-sdk`
+
+## Branch protection
+
+For `main`, require these status checks before merge:
+
+- `checks`
+- `tests`
