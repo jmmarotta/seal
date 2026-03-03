@@ -12,6 +12,7 @@
     "publish": "turbo run publish:run --concurrency 1 --filter '@jmmarotta/seal' --filter '@jmmarotta/seal-sdk'",
     "changeset": "changeset",
     "changeset:status": "changeset status --verbose",
+    "changeset:status:since-main": "changeset status --since=main",
     "changeset:version": "changeset version && bun install --lockfile-only",
     "typecheck": "turbo run typecheck",
     "lint": "turbo run lint",
