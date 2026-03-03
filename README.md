@@ -5,22 +5,7 @@ SEAL stands for **Spec Execution Assurance Ledger**.
 SEAL is a contract-first, agent-friendly workflow that combines human-readable planning
 with machine-validated completion gates.
 
-## Packages
-
-- `packages/sdk` (`@jmmarotta/seal-sdk`): schemas, parsing, workspace checks, and rendering.
-- `packages/cli` (`@jmmarotta/seal`): CLI wrapper over the SDK.
-
-## Setup
-
-```bash
-bun install
-```
-
-Requires Bun 1.3+ (SEAL relies on Bun runtime APIs).
-
-## CLI
-
-Install (published):
+## Install CLI
 
 ```bash
 bun add -g @jmmarotta/seal
@@ -28,41 +13,20 @@ bun add -g @jmmarotta/seal
 npm install -g @jmmarotta/seal
 ```
 
-Run without installing (published):
+Run without installing:
 
 ```bash
 bunx @jmmarotta/seal@latest --help
 ```
 
-Local development from a checkout (`bun link`):
+## Quick start
 
 ```bash
-# from this repo root
-bun run --cwd packages/cli build
-bun link --cwd packages/cli
-
-# now available in your shell
-seal --help
+seal init --prefix SEA
+seal new "Deterministic changelog generation"
+seal list
+seal check
 ```
-
-Optional: in another project directory, link it as a dependency:
-
-```bash
-bun link @jmmarotta/seal
-```
-
-Publish-like local install check (tarball):
-
-```bash
-bun run --cwd packages/cli build
-TARBALL="$(bun pm --cwd packages/cli pack --quiet --ignore-scripts --destination "$PWD/packages/cli" | tr -d '\n')"
-bun remove -g @jmmarotta/seal
-bun add -g "$TARBALL"
-seal --help
-```
-
-Use this tarball flow as a packaging smoke test. For day-to-day local CLI usage,
-prefer `bun link --cwd packages/cli`.
 
 ## Core commands
 
@@ -72,14 +36,10 @@ prefer `bun link --cwd packages/cli`.
 - `seal edit status <SPEC_KEY> <status>`
 - `seal check [--json] [--strict-docs-evidence]`
 
-## Quick start
+## Packages
 
-```bash
-bun run dev init --prefix SEA
-bun run dev new "Deterministic changelog generation"
-bun run dev list
-bun run dev check
-```
+- `packages/cli` (`@jmmarotta/seal`): CLI wrapper over the SDK.
+- `packages/sdk` (`@jmmarotta/seal-sdk`): schemas, parsing, workspace checks, and rendering.
 
 ## Documentation
 
@@ -89,26 +49,4 @@ bun run dev check
 - `docs/checker.md` - checker rules and common fixes.
 - `docs/invariants.md` - invariant lifecycle and verification linkage.
 - `docs/agent-guidelines.md` - practical conventions for agent edits.
-
-## Quality gates
-
-- `bun run fmt:check`
-- `bun run lint`
-- `bun run typecheck`
-- `bun run test`
-- `bun run ci:seal-check` (validates `seal check --json` in CI fixture flow)
-
-## Release tags
-
-Use git tags to select which package(s) publish:
-
-- `vX.Y.Z`: publish both `@jmmarotta/seal` and `@jmmarotta/seal-sdk`
-- `seal-vX.Y.Z`: publish only `@jmmarotta/seal`
-- `seal-sdk-vX.Y.Z`: publish only `@jmmarotta/seal-sdk`
-
-## Branch protection
-
-For `main`, require these status checks before merge:
-
-- `checks`
-- `tests`
+- `docs/development.md` - development setup, CI/CD, changesets policy, and release runbook.
