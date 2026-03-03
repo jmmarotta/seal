@@ -1,4 +1,4 @@
-# seal
+# @jmmarotta/seal
 
 SEAL is a contract-first workflow for spec execution and verification.
 
@@ -10,15 +10,15 @@ Requires Bun 1.3+ at runtime.
 ## Install
 
 ```bash
-bun add -g seal
+bun add -g @jmmarotta/seal
 # or
-npm install -g seal
+npm install -g @jmmarotta/seal
 ```
 
 Run without installing:
 
 ```bash
-bunx seal@latest --help
+bunx @jmmarotta/seal@latest --help
 ```
 
 Local development from this repository:
@@ -35,7 +35,7 @@ seal --help
 Optional: in another project directory, link it as a dependency:
 
 ```bash
-bun link seal
+bun link @jmmarotta/seal
 ```
 
 ## Quick start

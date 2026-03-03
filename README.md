@@ -8,7 +8,7 @@ with machine-validated completion gates.
 ## Packages
 
 - `packages/sdk` (`@jmmarotta/seal-sdk`): schemas, parsing, workspace checks, and rendering.
-- `packages/cli` (`seal`): CLI wrapper over the SDK.
+- `packages/cli` (`@jmmarotta/seal`): CLI wrapper over the SDK.
 
 ## Setup
 
@@ -23,15 +23,15 @@ Requires Bun 1.3+ (SEAL relies on Bun runtime APIs).
 Install (published):
 
 ```bash
-bun add -g seal
+bun add -g @jmmarotta/seal
 # or
-npm install -g seal
+npm install -g @jmmarotta/seal
 ```
 
 Run without installing (published):
 
 ```bash
-bunx seal@latest --help
+bunx @jmmarotta/seal@latest --help
 ```
 
 Local development from a checkout (`bun link`):
@@ -48,7 +48,7 @@ seal --help
 Optional: in another project directory, link it as a dependency:
 
 ```bash
-bun link seal
+bun link @jmmarotta/seal
 ```
 
 Publish-like local install check (tarball):
@@ -56,7 +56,7 @@ Publish-like local install check (tarball):
 ```bash
 bun run --cwd packages/cli build
 TARBALL="$(bun pm --cwd packages/cli pack --quiet --ignore-scripts --destination "$PWD/packages/cli" | tr -d '\n')"
-bun remove -g seal
+bun remove -g @jmmarotta/seal
 bun add -g "$TARBALL"
 seal --help
 ```
