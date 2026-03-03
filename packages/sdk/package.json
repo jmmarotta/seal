@@ -28,5 +28,14 @@
   },
   "dependencies": {
     "zod": "^4.3.6"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmmarotta/seal.git",
+    "directory": "packages/sdk"
+  },
+  "bugs": {
+    "url": "https://github.com/jmmarotta/seal/issues"
+  },
+  "homepage": "https://github.com/jmmarotta/seal/tree/main/packages/sdk#readme"
 }
