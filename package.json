@@ -10,6 +10,9 @@
     "start": "bun packages/cli/src/index.ts",
     "publish:dry": "turbo run publish:dry --concurrency 1 --filter '@jmmarotta/seal' --filter '@jmmarotta/seal-sdk'",
     "publish": "turbo run publish:run --concurrency 1 --filter '@jmmarotta/seal' --filter '@jmmarotta/seal-sdk'",
+    "changeset": "changeset",
+    "changeset:status": "changeset status --verbose",
+    "changeset:version": "changeset version && bun install --lockfile-only",
     "typecheck": "turbo run typecheck",
     "lint": "turbo run lint",
     "fmt": "turbo run fmt",
@@ -19,6 +22,7 @@
     "postinstall": "if [ -d .git ]; then lefthook install; fi"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.30.0",
     "@jmmarotta/seal-sdk": "workspace:*",
     "@tsconfig/bun": "latest",
     "@types/bun": "latest",
