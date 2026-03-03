@@ -31,7 +31,7 @@ jobs:
         run: bun run typecheck
 
       - name: Changeset gate
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && !startsWith(github.head_ref, 'changeset-release/')
         run: bun run changeset:status:since-main
 
       - name: Seal check JSON gate

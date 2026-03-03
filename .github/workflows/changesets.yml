@@ -40,4 +40,5 @@ jobs:
           commit: Version packages
           title: Version packages
         env:
+          LEFTHOOK: "0"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
