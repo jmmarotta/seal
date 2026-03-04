@@ -19,7 +19,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "bun build src/index.ts --outdir dist --target bun --format esm --sourcemap --external @stricli/core --external @jmmarotta/seal-sdk --banner '#!/usr/bin/env bun\n' && tsgo -p tsconfig.json --emitDeclarationOnly",
+    "build": "bun build src/index.ts --outdir dist --target bun --format esm --sourcemap --external @stricli/core --external @jmmarotta/seal-sdk --banner '#!/usr/bin/env bun\n' && tsgo -p tsconfig.build.json --emitDeclarationOnly --declarationDir dist --outDir dist",
     "prepack": "bun run build",
     "publish:dry": "npm publish --dry-run",
     "publish:run": "npm publish",

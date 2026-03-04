@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@jmmarotta/seal-sdk": ["../sdk/dist/index.d.ts"],
+      "*": ["./*"]
+    }
+  }
+}

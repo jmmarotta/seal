@@ -16,7 +16,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "bun build src/index.ts --outdir dist --target bun --format esm --sourcemap && tsgo -p tsconfig.json --emitDeclarationOnly",
+    "build": "bun build src/index.ts --outdir dist --target bun --format esm --sourcemap && tsgo -p tsconfig.json --emitDeclarationOnly --declarationDir dist --outDir dist",
     "prepack": "bun run build",
     "publish:dry": "bun publish --dry-run --access public",
     "publish:run": "bun publish --access public",

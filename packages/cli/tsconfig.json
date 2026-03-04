@@ -5,6 +5,7 @@
     "outDir": "./dist",
     "declaration": true,
     "declarationMap": true,
+    "declarationDir": "./dist",
     "strict": true,
     "noEmit": false,
     "paths": {
