@@ -18,20 +18,18 @@
     },
     "packages/cli": {
       "name": "@jmmarotta/seal",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "bin": {
         "seal": "dist/index.js",
       },
       "dependencies": {
-        "@stricli/core": "^1",
-      },
-      "devDependencies": {
         "@jmmarotta/seal-sdk": "workspace:*",
+        "@stricli/core": "^1",
       },
     },
     "packages/sdk": {
       "name": "@jmmarotta/seal-sdk",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "dependencies": {
         "zod": "^4.3.6",
       },
