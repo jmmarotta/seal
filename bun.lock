@@ -23,8 +23,10 @@
         "seal": "dist/index.js",
       },
       "dependencies": {
-        "@jmmarotta/seal-sdk": "workspace:*",
         "@stricli/core": "^1",
+      },
+      "devDependencies": {
+        "@jmmarotta/seal-sdk": "workspace:*",
       },
     },
     "packages/sdk": {

@@ -1,5 +1,12 @@
 # @jmmarotta/seal
 
+## 0.1.3
+
+### Patch Changes
+
+- Bundle the SDK into the CLI package so published installs no longer depend on a
+  workspace protocol dependency.
+
 ## 0.1.2
 
 ### Patch Changes

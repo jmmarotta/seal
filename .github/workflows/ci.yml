@@ -37,6 +37,9 @@ jobs:
       - name: Seal check JSON gate
         run: bun run ci:seal-check
 
+      - name: CLI install smoke test
+        run: bun run ci:cli-install-smoke
+
   tests:
     runs-on: ubuntu-latest
     steps:

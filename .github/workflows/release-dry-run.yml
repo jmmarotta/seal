@@ -28,6 +28,7 @@ jobs:
           bun run typecheck
           bun run test
           bun run ci:seal-check
+          bun run ci:cli-install-smoke
 
       - name: Publish dry run
         run: bun run publish:dry

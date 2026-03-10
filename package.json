@@ -20,6 +20,7 @@
     "fmt:check": "turbo run fmt:check",
     "test": "turbo run test",
     "ci:seal-check": "turbo run build --filter @jmmarotta/seal-sdk && bun scripts/ci-seal-check.ts",
+    "ci:cli-install-smoke": "bun scripts/ci-cli-install-smoke.ts",
     "postinstall": "if [ -d .git ]; then lefthook install; fi"
   },
   "devDependencies": {
