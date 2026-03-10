@@ -16,7 +16,6 @@ export * from "./render";
 export * from "./spec";
 export * from "./spec-key";
 export * from "./status";
+export * from "./version";
 export * from "./work";
 export * from "./workspace";
-
-export const SEAL_SDK_VERSION = "0.1.0";

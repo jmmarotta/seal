@@ -1,5 +1,12 @@
 # @jmmarotta/seal
 
+## 0.1.4
+
+### Patch Changes
+
+- Read package versions from each package manifest so the exported version values
+  and `seal --version` stay aligned with published releases.
+
 ## 0.1.3
 
 ### Patch Changes
