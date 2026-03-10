@@ -54,6 +54,9 @@ jobs:
       - name: Seal check JSON gate
         run: bun run ci:seal-check
 
+      - name: CLI install smoke test
+        run: bun run ci:cli-install-smoke
+
   tests:
     runs-on: ubuntu-latest
     steps:
@@ -167,8 +170,7 @@ jobs:
 
       - name: Build CLI publish artifacts
         if: (steps.target.outputs.target == 'all' || steps.target.outputs.target == 'cli') && steps.cli.outputs.publish == 'true'
-        working-directory: packages/cli
-        run: bun install --frozen-lockfile && bun run build
+        run: bun run build --filter @jmmarotta/seal-sdk && bun run --cwd packages/cli build
 
       - name: Publish CLI
         if: (steps.target.outputs.target == 'all' || steps.target.outputs.target == 'cli') && steps.cli.outputs.publish == 'true'
